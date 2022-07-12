@@ -9,22 +9,29 @@ and each column represents a single day across all patients.
 
 import numpy as np
 
+
 def patient_normalise(data):
     """
-    Normalise patient data from a 2D inflammation data array.
+    Normalise patient data between 0 and 1 of a 2D inflammation data array.
 
-    NaN values are ignored, and normalised to 0.
+    Any NaN values are ignored, and normalised to 0
 
-    Negative values are rounded to 0.
+    :param data: 2D array of inflammation data
+    :type data: ndarray
+
     """
+    if not isinstance(data, np.ndarray):
+        raise TypeError('data input should be ndarray')
+    if len(data.shape) != 2:
+        raise ValueError('inflammation array should be 2-dimensional')
     if np.any(data < 0):
-        raise ValueError('Inflammation values should not be negative')
+        raise ValueError('inflammation values should be non-negative')
     max_data = np.nanmax(data, axis=1)
     with np.errstate(invalid='ignore', divide='ignore'):
         normalised = data / max_data[:, np.newaxis]
     normalised[np.isnan(normalised)] = 0
-    normalised[normalised < 0] = 0
     return normalised
+
 
 def load_csv(filename):
     """Load a Numpy array from a CSV
@@ -48,7 +55,7 @@ def daily_mean(data):
 def daily_max(data):
     """Calculate the daily max of a 2d inflammation data array.
 
-    :param data: A 2D numpy array that contain inflammation data numpy.array
+    :param data: A 2D numpy array that contain inflammation data numpy. array
     :returns: A numpy array of maximum values for each day.
     """
     return np.max(data, axis=0)
@@ -61,4 +68,3 @@ def daily_min(data):
     :returns: A numpy array of minimum values for each day.
     """
     return np.min(data, axis=0)
-
