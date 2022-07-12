@@ -38,7 +38,7 @@ def test_daily_min(test, expected):
     """Test min function works for zeroes, positive integers, mix of positive/negative integers."""
     from inflammation.models import daily_min
     npt.assert_array_equal(daily_min(np.array(test)), np.array(expected))
-    
+
 def test_daily_min_string():
     """Test for TypeError when passing strings"""
     from inflammation.models import daily_min
