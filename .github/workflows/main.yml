@@ -8,8 +8,6 @@ jobs:
 
   build:
 
-    # we can also specify the OS to run tests on
-
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -28,13 +26,3 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-
-    - name: Install Python dependencies
-      run: |
-        python3 -m pip install --upgrade pip
-        pip3 install -r requirements.txt
-        pip3 install -e .
-
-    - name: Test with PyTest
-      run: |
-        pytest --cov=inflammation.models tests/test_models.py
