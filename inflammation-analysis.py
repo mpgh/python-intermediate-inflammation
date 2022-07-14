@@ -27,11 +27,27 @@ def main(args):
             }
 
             views.visualize(view_data)
+        elif args.view == 'visual_save':
+            view_data = {
+                'average': models.daily_mean(inflammation_data),
+                'max': models.daily_max(inflammation_data),
+                'min': models.daily_min(inflammation_data)
+            }
+
+            views.visualize(view_data, save=True)
+
         elif args.view == 'record':
             patient_data = inflammation_data[args.patient]
             observations = [models.Observation(day, value) for day, value in enumerate(patient_data)]
             patient = models.Patient('UNKNOWN', observations)
             views.display_patient_record(patient)
+        elif args.view == 'serialize':
+            patient_data = inflammation_data[args.patient]
+            observations = [models.Observation(day, value) for day, value in enumerate(patient_data)]
+            patient = models.Patient('UNKNOWN', observations)
+            views.display_patient_record(patient)
+
+
 
 
 if __name__ == "__main__":
@@ -46,7 +62,7 @@ if __name__ == "__main__":
     parser.add_argument(
         '--view',
         default='visualize',
-        choices=['visualize', 'record'],
+        choices=['visualize', 'record', 'visual_save'],
         help='Which view should be used?')
 
     parser.add_argument(

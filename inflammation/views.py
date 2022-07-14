@@ -11,7 +11,7 @@ def display_patient_record(patient):
         print(obs.day, obs.value)
 
 
-def visualize(data_dict):
+def visualize(data_dict, save = False):
     """Display plots of basic statistical properties of the inflammation data.
 
     :param data_dict: Dictionary of name -> data to plot
@@ -28,5 +28,7 @@ def visualize(data_dict):
         axes.plot(data)
 
     fig.tight_layout()
-
-    plt.show()
+    if save:
+        plt.savefig('output.png')
+    else:
+        plt.show()
