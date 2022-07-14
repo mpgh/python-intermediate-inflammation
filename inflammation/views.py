@@ -1,8 +1,15 @@
 """Module containing code for plotting inflammation data."""
 
 from matplotlib import pyplot as plt
+from . import serializers
 import numpy as np
 
+
+def save_serialized_patient_records(patient):
+    """Save serialized data for all patient."""
+    output_file = 'test_patient.json'
+    serializers.PatientJSONSerializer.save([patient], output_file)
+    #tbd
 
 def display_patient_record(patient):
     """Display data for a single patient."""
